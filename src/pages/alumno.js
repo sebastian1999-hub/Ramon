@@ -83,16 +83,26 @@ async function boot() {
   const grouped = groupByDay(studentLaps)
   contentEl.innerHTML = Object.entries(grouped)
     .map(([day, dayLaps]) => {
-      const rows = dayLaps
-        .map(
-          (lap, index) => `
+      const chronologicalLaps = [...dayLaps].sort(
+        (a, b) => new Date(a.recorded_at).getTime() - new Date(b.recorded_at).getTime()
+      )
+
+      const rows = chronologicalLaps
+        .map((lap, index) => {
+          const previousLap = index > 0 ? chronologicalLaps[index - 1] : null
+          const deltaMs = previousLap ? lap.elapsed_ms - previousLap.elapsed_ms : null
+          const deltaClass =
+            deltaMs === null ? '' : deltaMs < 0 ? 'delta-better' : deltaMs > 0 ? 'delta-worse' : 'delta-same'
+          const deltaText = deltaMs === null ? '—' : `${deltaMs < 0 ? '-' : deltaMs > 0 ? '+' : '±'}${formatElapsed(Math.abs(deltaMs))}`
+
+          return `
             <tr>
               <td>${index + 1}</td>
               <td>${formatElapsed(lap.elapsed_ms)}</td>
-              <td>${new Date(lap.recorded_at).toLocaleTimeString('es-AR')}</td>
+              <td class="lap-delta ${deltaClass}">${deltaText}</td>
             </tr>
           `
-        )
+        })
         .join('')
 
       return `
@@ -103,7 +113,7 @@ async function boot() {
               <tr>
                 <th>#</th>
                 <th>Tiempo</th>
-                <th>Hora</th>
+                <th>Δ vs anterior</th>
               </tr>
             </thead>
             <tbody>${rows}</tbody>

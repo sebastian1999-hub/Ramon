@@ -389,6 +389,22 @@ th {
   color: var(--muted);
 }
 
+.lap-delta {
+  font-weight: 700;
+}
+
+.lap-delta.delta-better {
+  color: #1d7f5f;
+}
+
+.lap-delta.delta-worse {
+  color: #b54444;
+}
+
+.lap-delta.delta-same {
+  color: var(--muted);
+}
+
 .empty {
   color: var(--muted);
 }
