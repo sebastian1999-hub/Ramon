@@ -67,7 +67,7 @@ function boot() {
 
   async function onAddStudent(event) {
     event.preventDefault()
-    const fullName = studentNameEl.value.trim()
+    const fullName = normalizeStudentName(studentNameEl.value)
 
     if (!fullName) return
 
@@ -82,6 +82,18 @@ function boot() {
     await loadStudents()
     renderStudentsList()
     setStatus(`Alumno ${fullName} guardado correctamente.`)
+  }
+
+  function normalizeStudentName(value) {
+    return value
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean)
+      .map((word) => {
+        const lowerWord = word.toLocaleLowerCase('es-ES')
+        return lowerWord.charAt(0).toLocaleUpperCase('es-ES') + lowerWord.slice(1)
+      })
+      .join(' ')
   }
 
   async function onDeleteStudent(studentId) {
