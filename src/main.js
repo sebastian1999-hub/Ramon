@@ -44,20 +44,20 @@ function boot() {
 
       <p id="status" class="status">Listo para comenzar.</p>
 
-      <div id="participantsSection">
+      <div id="participantsSection" class="smooth-section">
         <h3>Participantes de esta tanda</h3>
         <p class="hint">Haz clic en un participante para quitarlo de la tanda.</p>
         <div id="selectedButtons" class="lap-grid"></div>
       </div>
 
-      <div id="lapsSection">
+      <div id="lapsSection" class="smooth-section is-collapsed" aria-hidden="true">
         <h3>Registrar vuelta</h3>
         <p class="hint">Una vez iniciado, pulsa cada nombre para guardar su tiempo sin detener el cronómetro.</p>
         <div id="lapButtons" class="lap-grid"></div>
       </div>
     </section>
 
-    <section id="rosterSection" class="panel">
+    <section id="rosterSection" class="panel smooth-section">
       <h2>Listado de alumnos</h2>
       <p class="hint">Haz clic en un alumno para añadirlo a la tanda actual.</p>
       <div id="rosterButtons" class="roster-grid"></div>
@@ -134,9 +134,14 @@ function boot() {
   }
 
   function renderModeVisibility() {
-    participantsSectionEl.style.display = sessionStarted ? 'none' : 'block'
-    rosterSectionEl.style.display = sessionStarted ? 'none' : 'grid'
-    lapsSectionEl.style.display = sessionStarted ? 'block' : 'none'
+    setSectionVisibility(participantsSectionEl, !sessionStarted)
+    setSectionVisibility(rosterSectionEl, !sessionStarted)
+    setSectionVisibility(lapsSectionEl, sessionStarted)
+  }
+
+  function setSectionVisibility(sectionEl, shouldShow) {
+    sectionEl.classList.toggle('is-collapsed', !shouldShow)
+    sectionEl.setAttribute('aria-hidden', String(!shouldShow))
   }
 
   function tick() {
