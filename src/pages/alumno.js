@@ -1,5 +1,5 @@
 import '../style.css'
-import { createSupabaseClient, renderMissingConfig, renderTopNav } from '../lib/supabaseClient'
+import { appPath, createSupabaseClient, renderMissingConfig, renderTopNav } from '../lib/supabaseClient'
 import { formatDay, formatElapsed, groupByDay } from '../lib/timeUtils'
 
 const app = document.querySelector('#app')
@@ -18,11 +18,11 @@ async function boot() {
   if (!studentId) {
     app.innerHTML = `
       <main class="layout">
-        ${renderTopNav('/alumnos.html')}
+        ${renderTopNav('alumnos')}
         <section class="panel">
           <h2>Alumno no especificado</h2>
           <p class="empty">Falta el id del alumno en la URL.</p>
-          <a class="btn" href="/alumnos.html">Volver a alumnos</a>
+          <a class="btn" href="${appPath('alumnos.html')}">Volver a alumnos</a>
         </section>
       </main>
     `
@@ -40,7 +40,7 @@ async function boot() {
 
   app.innerHTML = `
     <main class="layout">
-      ${renderTopNav('/alumnos.html')}
+      ${renderTopNav('alumnos')}
       <section class="hero">
         <p class="eyebrow">Ficha del Alumno</p>
         <h1>${student?.full_name ?? 'Alumno'}</h1>
@@ -50,7 +50,7 @@ async function boot() {
       <section class="panel">
         <div class="panel-head">
           <h2>Historial</h2>
-          <a class="btn" href="/alumnos.html">Volver a alumnos</a>
+          <a class="btn" href="${appPath('alumnos.html')}">Volver a alumnos</a>
         </div>
         <div id="content"></div>
       </section>

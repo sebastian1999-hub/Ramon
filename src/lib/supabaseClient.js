@@ -21,15 +21,22 @@ export function renderMissingConfig(app) {
   `
 }
 
+export function appPath(path = '') {
+  const base = import.meta.env.BASE_URL || '/'
+  const normalizedBase = base.endsWith('/') ? base : `${base}/`
+  const normalizedPath = path.replace(/^\/+/, '')
+  return `${normalizedBase}${normalizedPath}`
+}
+
 export function renderTopNav(activePath) {
   const links = [
-    { href: '/', label: 'Cronómetro' },
-    { href: '/alumnos.html', label: 'Alumnos' },
+    { id: 'cronometro', href: appPath(''), label: 'Cronómetro' },
+    { id: 'alumnos', href: appPath('alumnos.html'), label: 'Alumnos' },
   ]
 
   const navLinks = links
     .map((link) => {
-      const isActive = activePath === link.href
+      const isActive = activePath === link.id
       return `<a class="nav-link ${isActive ? 'active' : ''}" href="${link.href}">${link.label}</a>`
     })
     .join('')

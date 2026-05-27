@@ -1,5 +1,5 @@
 import '../style.css'
-import { createSupabaseClient, renderMissingConfig, renderTopNav } from '../lib/supabaseClient'
+import { appPath, createSupabaseClient, renderMissingConfig, renderTopNav } from '../lib/supabaseClient'
 
 const app = document.querySelector('#app')
 const supabase = createSupabaseClient()
@@ -15,7 +15,7 @@ function boot() {
 
   app.innerHTML = `
     <main class="layout">
-      ${renderTopNav('/alumnos.html')}
+      ${renderTopNav('alumnos')}
       <section class="hero">
         <p class="eyebrow">Panel de Alumnos</p>
         <h1>Altas y Listado</h1>
@@ -124,7 +124,7 @@ function boot() {
     studentListEl.innerHTML = students
       .map(
         (student) =>
-          `<li class="student-row"><a class="student-link" href="/alumno.html?id=${student.id}">${student.full_name}</a><button class="delete-btn" type="button" data-id="${student.id}">Eliminar</button></li>`
+          `<li class="student-row"><a class="student-link" href="${appPath(`alumno.html?id=${student.id}`)}">${student.full_name}</a><button class="delete-btn" type="button" data-id="${student.id}">Eliminar</button></li>`
       )
       .join('')
 

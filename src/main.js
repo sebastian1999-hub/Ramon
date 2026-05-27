@@ -23,7 +23,7 @@ function boot() {
 
   app.innerHTML = `
   <main class="layout">
-    ${renderTopNav('/')}
+    ${renderTopNav('cronometro')}
     <section class="hero">
       <p class="eyebrow">Cronómetro</p>
       <h1>Registro de Vueltas</h1>
