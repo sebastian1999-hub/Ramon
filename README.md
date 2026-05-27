@@ -18,6 +18,7 @@ Aplicacion web para registrar tiempos de vueltas de alumnos con cronometro conti
 Abre el SQL Editor de Supabase y ejecuta el contenido de:
 
 - `supabase/migrations/001_students_and_lap_times.sql`
+- `supabase/migrations/002_enable_student_delete.sql`
 
 Se crearan dos tablas nuevas:
 
